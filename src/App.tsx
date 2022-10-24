@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { Duration, DateTime } from "luxon";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Pause, Play, TimerReset } from "lucide-react";
 import useInterval from "./use-interval";
 
 const Minute = Duration.fromObject({ minutes: 1 });
@@ -93,32 +93,42 @@ function App() {
   }, [session]);
 
   return (
-    <div>
-      <div className="flex">
-        <div id="break-label">Break</div>
-        <div id="break-decrement" onClick={() => setRest(decTime)}>
-          <ChevronDown />
+    <div className="max-w-md m-auto">
+      <div className="flex justify-between my-10">
+        <div className="flex flex-col w-24 items-center">
+          <div id="session-label">Session</div>
+          <div className="flex">
+            <div id="session-decrement" onClick={() => setSession(decTime)}>
+              <ChevronDown />
+            </div>
+            <div className="w-6" id="session-length">
+              {session.minutes}
+            </div>
+            <div id="session-increment" onClick={() => setSession(incTime)}>
+              <ChevronUp />
+            </div>
+          </div>
         </div>
-        <div id="break-length">{rest.minutes}</div>
-        <div id="break-increment" onClick={() => setRest(incTime)}>
-          <ChevronUp />
+        <div className="flex flex-col w-24 items-center">
+          <div id="break-label">Break</div>
+          <div className="flex">
+            <div id="break-decrement" onClick={() => setRest(decTime)}>
+              <ChevronDown />
+            </div>
+            <div id="break-length" className="w-6">
+              {rest.minutes}
+            </div>
+            <div id="break-increment" onClick={() => setRest(incTime)}>
+              <ChevronUp />
+            </div>
+          </div>
         </div>
       </div>
-      <div className="flex">
-        <div id="session-label">Session</div>
-        <div id="session-decrement" onClick={() => setSession(decTime)}>
-          <ChevronDown />
-        </div>
-        <div id="session-length">{session.minutes}</div>
-        <div id="session-increment" onClick={() => setSession(incTime)}>
-          <ChevronUp />
-        </div>
-      </div>
-      <button id="start_stop" onClick={() => startStop()}>
-        {running ? "Stop" : "Start"}
+      <button className="p-2" id="start_stop" onClick={() => startStop()}>
+        {running ? <Pause /> : <Play />}
       </button>
-      <button id="reset" onClick={reset}>
-        Reset
+      <button className="p-2" id="reset" onClick={reset}>
+        <TimerReset />
       </button>
       <div id="timer-label">{isSession ? "Session" : "Rest"}</div>
       <audio
