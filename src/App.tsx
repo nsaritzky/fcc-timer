@@ -61,6 +61,7 @@ function App() {
     setRunning(false);
     setSession(initialSession);
     setRest(initialRest);
+    setTimeLeft(initialSession);
     setIsSession(true);
     beep.current!.pause();
     beep.current!.currentTime = 0;
